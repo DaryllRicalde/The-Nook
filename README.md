@@ -10,5 +10,5 @@ The Nook is a simple web application that allows users to create an account and 
 - HTML, CSS
 
 ## Tasks
-- [] Allower users to be able to register to your website
-     -[] Create a register form
+- [ ] Allower users to be able to register to your website
+     -[ ] Create a register form
