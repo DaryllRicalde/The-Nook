@@ -30,4 +30,11 @@ def register():
 
     name = request.form.get("user")
     password = request.form.get("password")
+
+    #Insert the user into the database
+
     return render_template("register.html")
+
+@app.route("/menu")
+def menu():
+    return render_template("menu.html")

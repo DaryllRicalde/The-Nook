@@ -14,12 +14,12 @@ The Nook
     <br>
     <form action="{{ url_for('menu') }}" method="post">
         <div class="form-group">
-          <label for="usr">Name:</label>
-          <input type="text" class="form-control" id="usr">
+          <label for="usr">Username:</label>
+          <input type="text" class="form-control" id="user" placeholder="GeorgeOrwell84" readonly>
         </div>
         <div class="form-group">
           <label for="pwd">Password:</label>
-          <input type="password" class="form-control" id="pwd">
+          <input type="password" class="form-control" id="password" placeholder="********" readonly>
           <button class="btn btn-primary" type="submit">Submit</button>
         </div>
       </form>
