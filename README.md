@@ -9,7 +9,7 @@ The Nook is a simple web application that allows users to create an account and 
 - Heroku
 - HTML, CSS
 
-###### Tasks
+## Tasks
 - [ ] Allow users to be able to register to the website.
   - [x] Create a form
   - [ ] Record the form data into the database
