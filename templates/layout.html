@@ -13,6 +13,14 @@
     .navbar{
     margin-bottom: 0px;
     }
+    .jumbotron {
+    background-image: url("/static/images/giammarco-boscaro-zeH-ljawHtg-unsplash.jpg");
+    background-size: cover;
+    }
+    
+    .container{
+      color: white;
+    }
   </style>
 </head>
 <body>
@@ -40,6 +48,8 @@
       <h1 class="display-4">{% block heading %} {% endblock %}</h1>
       <p class="lead">{% block body %}
         {% endblock %}</p>
+        <hr class="my-4">
+        
       </div>
     </div>
   </div>
