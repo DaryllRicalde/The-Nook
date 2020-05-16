@@ -1,14 +1,14 @@
 {% extends "layout.html" %}
 
 {% block heading %}
-Be part of the community!
+Welcome to The Nook!
 {% endblock %}
 
 {% block body %}
-<p> 
-  Register and take a spot in The Nook
+<p> Search a book and leave a review! </p>
+
   <br>
-  <form action="{{ url_for('menu') }}" method="post">
+  <form action="{{ url_for('index') }}" method="post">
       <div class="form-group row">
           <div class="form-group col-md-6">
           <label for="user">Username:</label>
@@ -22,6 +22,6 @@ Be part of the community!
           </div>
       </div>
     </form>
-    <button class="btn btn-primary" type="submit">Register</button>
-</p>
-{% endblock %} 
+    <button class="btn btn-primary" type="submit">Login</button>
+
+{% endblock %}

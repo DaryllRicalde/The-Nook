@@ -27,17 +27,16 @@ db = scoped_session(sessionmaker(bind=engine))
 
 @app.route("/")
 def index():
+
     return render_template("index.html")
-
-@app.route("/register")
-def register():
-
+    
     name = request.form.get("user")
     password = request.form.get("password")
 
-    #Insert the user into the database
 
-    return render_template("register.html")
+@app.route("/login")
+def login():
+    return render_template("login.html")
 
 @app.route("/menu")
 def menu():
