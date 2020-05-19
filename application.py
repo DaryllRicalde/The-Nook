@@ -34,8 +34,6 @@ def index():
 
     return render_template("index.html")
 
-
-
 @app.route("/login")
 def login():
     
@@ -44,7 +42,14 @@ def login():
 
     return render_template("login.html")
 
-
-@app.route("/menu")
+@app.route("/menu", methods=["GET","POST"])
 def menu():
-    return render_template("menu.html")
+        return render_template("menu.html")
+
+@app.route("/results", methods=["POST"])
+def results():
+    
+    query = request.form.get("query")
+    return render_template("results.html", query=query)
+
+
