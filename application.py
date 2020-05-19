@@ -11,6 +11,7 @@ app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL")
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db.init_app(app)
+Session(app)
 
 # Check for environment variable
 if not os.getenv("DATABASE_URL"):
@@ -27,16 +28,22 @@ db = scoped_session(sessionmaker(bind=engine))
 
 @app.route("/")
 def index():
-
-    return render_template("index.html")
     
     name = request.form.get("user")
     password = request.form.get("password")
 
+    return render_template("index.html")
+
+
 
 @app.route("/login")
 def login():
+    
+    name = request.form.get("user")
+    password = request.form.get("password")
+
     return render_template("login.html")
+
 
 @app.route("/menu")
 def menu():
