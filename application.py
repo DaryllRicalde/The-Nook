@@ -29,6 +29,7 @@ db = scoped_session(sessionmaker(bind=engine))
 @app.route("/")
 def index():
     
+    #Insert a user into a database
     name = request.form.get("user")
     password = request.form.get("password")
 
@@ -49,7 +50,8 @@ def menu():
 @app.route("/results", methods=["POST"])
 def results():
     
+    option = request.form.get("option") 
     query = request.form.get("query")
-    return render_template("results.html", query=query)
+    return render_template("results.html", query=query, option=option)
 
 
