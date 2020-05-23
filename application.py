@@ -43,15 +43,23 @@ def login():
 
     return render_template("login.html")
 
-@app.route("/menu", methods=["GET","POST"])
+@app.route("/menu", methods=["GET","POST"]) 
 def menu():
         return render_template("menu.html")
 
 @app.route("/results", methods=["POST"])
 def results():
     
-    option = request.form.get("option") 
     query = request.form.get("query")
-    return render_template("results.html", query=query, option=option)
+    search = "%" + query + "%"
+
+    if db.execute("SELECT * FROM books WHERE isbn LIKE :search OR (title LIKE :search) OR (author LIKE :search)", {"search":search}).rowcount == 0:
+        return render_template("error.html", message= "No book that matches query")
+    else:
+        books = db.execute("SELECT * FROM books WHERE isbn LIKE :search OR (title LIKE :search) OR (author LIKE :search)", {"search":search}).fetchall()
+        return render_template("results.html", books=books)
+
+
+
 
 

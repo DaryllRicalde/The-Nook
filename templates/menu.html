@@ -14,24 +14,6 @@ The Nook
 <form action="{{ url_for('results') }}" method="post">
         <div class="form-group">
           <label for="exampleInputEmail1"><h2>Search</h2></label>
-          <div class="form-check">
-            <input class="form-check-input" type="radio" name="option" value="isbn" checked>
-            <label class="form-check-label" for="isbn">
-              ISBN
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="radio" name="option" value="title" checked>
-            <label class="form-check-label" for="title">
-              Title
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="radio" name="option" value="author" checked>
-            <label class="form-check-label" for="author">
-              Autthor
-            </label>
-          </div>
           <input type="text" class="form-control" name="query" aria-describedby="emailHelp" placeholder="Enter a book's title, author, or ISBN">
           </div>
           <input class="btn btn-primary" type="submit" value="Submit">

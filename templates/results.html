@@ -5,8 +5,29 @@ The Nook
 {% endblock %}
 
 {% block body %}
-<h1>
-    {{ query }}
-    {{ option }}
-</h1>
+<!-- <ul>
+    {% for book in books %}
+    <li>
+        {{ book.title}} {{ book. author}}
+    </li>
+    {% endfor %}
+</ul> -->
+
+<table class="table table-hover">
+    <thead>
+    <tr>
+        <th scope="col">ISBN</th>
+        <th scope="col">Title</th>
+        <th scope="col">Author</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for book in books %}
+        <tr>
+            <th scope="row">{{ book.isbn}}</th>
+            <td>{{book.title}}</td>
+            <td>{{book.author}}</td>
+        </tr>
+    {% endfor %}
+</table>
 {% endblock %}
