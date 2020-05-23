@@ -1,19 +1,20 @@
-{% extends "layout.html" %}
+{% extends "postlayout.html" %}
 
 {% block title %}
 The Nook
 {% endblock %}
 
 {% block body %}
-<!-- <ul>
-    {% for book in books %}
-    <li>
-        {{ book.title}} {{ book. author}}
-    </li>
-    {% endfor %}
-</ul> -->
+<style>
+    .table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+      background-color:dodgerblue
+    }
+    .table-hover tbody{
+        font-size:20px;
+    }
 
-<table class="table table-hover">
+    </style>
+<table class="table table-hover table-dark">
     <thead>
     <tr>
         <th scope="col">ISBN</th>
@@ -28,6 +29,11 @@ The Nook
             <td>{{book.title}}</td>
             <td>{{book.author}}</td>
         </tr>
-    {% endfor %}
+        {% endfor %}
+        </tbody>
 </table>
+<p>
+    Please note that the results are limited to showing only 15 books. If you would like to create another query, 
+    click here to go back to the previous page.
+</p>
 {% endblock %}
