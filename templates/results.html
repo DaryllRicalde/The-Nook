@@ -7,13 +7,29 @@ The Nook
 {% block body %}
 <style>
     .table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
-      background-color:dodgerblue
+      background-color:grey;
     }
     .table-hover tbody{
         font-size:20px;
     }
+    .text-primary{
+        color:white;
+    }
+    .text-primary:active{
+        color:purple;
+    }
+    .p{
+        align-content: center;
+    }
 
     </style>
+<div class="container">
+    <div class="row">
+      <div class="col align-self-center">
+        <h2>To see details about a book, click its ISBN</h2>
+      </div>
+    </div>
+</div>
 <table class="table table-hover table-dark">
     <thead>
     <tr>
@@ -25,12 +41,12 @@ The Nook
     <tbody>
     {% for book in books %}
         <tr>
-            <th scope="row">{{ book.isbn}}</th>
-            <td>{{book.title}}</td>
+            <th scope="row"> <a href = "{{ url_for('book', isbn=book.isbn)}}">{{ book.isbn}}</a></th>
+            <td>{{book.title}} </td>
             <td>{{book.author}}</td>
         </tr>
         {% endfor %}
-        </tbody>
+    </tbody>
 </table>
 <p>
     Please note that the results are limited to showing only 15 books. If you would like to create another query, 

@@ -59,6 +59,16 @@ def results():
         books = db.execute("SELECT * FROM books WHERE isbn LIKE :search OR (title LIKE :search) OR (author LIKE :search) LIMIT 15", {"search":search}).fetchall()
         return render_template("results.html", books=books)
 
+@app.route("/results/<isbn>", methods=["GET", "POST"])
+def book(isbn):
+    if request.method == "POST":
+        if db.execute("SELECT * FROM book WHERE isbn =:isbn", {"isbn" :isbn}).rowcount == 0:
+            return render_template("error.html", message= "No ISBN matches that query")
+    
+    return render_template("book.html", isbn=isbn)
+        
+
+
 
 
 
