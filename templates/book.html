@@ -1,0 +1,42 @@
+{% extends "postlayout.html" %}
+
+{% block title %}
+The Nook
+{% endblock %}
+
+{% block heading %}
+{{title}}
+{% endblock%}
+
+{% block body %}
+<style>
+    .card{
+        color:black;
+    }
+    .card-header{
+        font-size: 16px;
+        color:white;
+    }
+    .form-group{
+        font-size:20px;
+    }
+</style>
+<div class="card" style="width: 18rem;">
+        <div class="card-header">
+        Book details
+        </div>
+    <ul class="list-group list-group-flush">
+    <li class="list-group-item"><strong>Average rating:</strong> {{ average }}</li>
+    <li class="list-group-item"><strong>Author: </strong> {{author}}  </li>
+    <li class="list-group-item"><strong>Year published: </strong> {{year}} </li>
+    </ul>
+</div>
+<!--Review text area-->
+<form>
+    <div class="form-group">
+        <label for="reviewForm">Leave your review:</label>
+        <textarea class="form-control" id="userReview" rows="3"></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary mb-2">Submit review</button>
+</form>
+{% endblock %}

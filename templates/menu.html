@@ -1,15 +1,22 @@
-{% extends "layout.html" %}
+{% extends "postlayout.html" %}
 
 {% block title %}
 The Nook
 {% endblock %}
 
 {% block heading %}
-The Nook
 {% endblock %}
 
 {% block body %}
-<p> 
-    This is The Nook. A place where you can leave a review about books!
-</p>
+<!-- Search form -->
+<!-- Search id = "query" -->
+<p>
+<form action="{{ url_for('results') }}" method="post">
+        <div class="form-group">
+          <label for="exampleInputEmail1"><h2>Search</h2></label>
+          <input type="text" class="form-control" name="query" aria-describedby="emailHelp" placeholder="Enter a book's title, author, or ISBN">
+          </div>
+          <input class="btn btn-primary" type="submit" value="Submit">
+          </form>
 {% endblock %}
+

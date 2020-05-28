@@ -1,7 +1,7 @@
 import os
 import requests
 
-from flask import Flask, session, render_template, request
+from flask import Flask, session, render_template, request,json
 from flask_session import Session
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
@@ -29,12 +29,11 @@ db = scoped_session(sessionmaker(bind=engine))
 @app.route("/")
 def index():
     
+    #Insert a user into a database
     name = request.form.get("user")
     password = request.form.get("password")
 
     return render_template("index.html")
-
-
 
 @app.route("/login")
 def login():
@@ -44,7 +43,45 @@ def login():
 
     return render_template("login.html")
 
-
-@app.route("/menu")
+@app.route("/menu", methods=["GET","POST"]) 
 def menu():
-    return render_template("menu.html")
+        return render_template("menu.html")
+
+@app.route("/results", methods=["POST"])
+def results():
+    
+    query = request.form.get("query")
+    #Concat the search query with "%" before and after to use it in a SQL query
+    search = "%" + query + "%"
+
+    if db.execute("SELECT * FROM books WHERE isbn LIKE :search OR (title LIKE :search) OR (author LIKE :search)", {"search":search}).rowcount == 0:
+        return render_template("error.html", message= "No book that matches query")
+    else:
+        books = db.execute("SELECT * FROM books WHERE isbn LIKE :search OR (title LIKE :search) OR (author LIKE :search) LIMIT 15", {"search":search}).fetchall()
+        return render_template("results.html", books=books)
+
+@app.route("/results/<isbn>", methods=["GET", "POST"])
+def book(isbn):
+    if request.method == "POST":
+        if db.execute("SELECT * FROM books WHERE isbn =:isbn", {"isbn" :isbn}).rowcount == 0:
+            return render_template("error.html", message= "No ISBN matches that query")                
+    key = "VLzf2BCTUPaWOUXWddDBQ"
+
+    #Get JSON data
+    res = requests.get("https://www.goodreads.com/book/review_counts.json", params={"key":key, "isbns":isbn})
+    query = res.json()
+    data = query["books"][0]
+    average = data["average_rating"]
+
+    book = db.execute("SELECT * FROM books WHERE isbn =:isbn", {"isbn" :isbn}).fetchone()
+    title = book.title
+    author = book.author
+    year = book.year    
+    return render_template("book.html", average=average, title=title,author=author,year=year)
+        
+
+
+
+
+
+
