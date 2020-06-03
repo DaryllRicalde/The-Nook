@@ -1,7 +1,7 @@
 import os
 import requests
 
-from flask import Flask, session, render_template, request,json
+from flask import Flask, session, render_template, request,json,redirect
 from flask_session import Session
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
@@ -26,25 +26,62 @@ engine = create_engine(os.getenv("DATABASE_URL"))
 db = scoped_session(sessionmaker(bind=engine))
 
 
-@app.route("/")
+@app.route("/", methods=["GET","POST"])
 def index():
     
     #Insert a user into a database
     name = request.form.get("user")
     password = request.form.get("password")
+    verify = request.form.get("verify")
 
-    return render_template("index.html")
+    if request.method == "POST":
 
-@app.route("/login")
+        #Check if the username field has input
+        if name == "":
+            return render_template("error.html",message="Please enter a valid username")
+        
+        #Check if the password or verify password field has input
+        if password or verify == "":
+            return render_template("error.html",message="Please enter a valid password")
+
+        #Check if username already exists
+        checkUser = db.execute("SELECT username FROM users WHERE username LIKE :namegiven", {"namegiven":name})
+        if checkUser.rowcount > 0:
+            return render_template("error.html",message="That username is already taken")
+        
+        #If username is valid, check if passwords are matching and if TRUE, insert the user into the database
+        elif password == verify:
+            db.execute("INSERT INTO users (username,password) VALUES (:username, :password)", {"username":name,"password":password})
+            db.commit()
+            return redirect("/login")
+        elif password != verify:
+            return render_template("error.html", message="Passwords dont match")
+    if request.method == "GET":
+        return render_template("index.html")
+
+@app.route("/login", methods=["GET","POST"])
 def login():
     
-    name = request.form.get("user")
-    password = request.form.get("password")
+    #Check if user is submitting data via POST
+    if request.method == "POST":
+
+        #Check if the user exists
+        name = request.form.get("user")
+        password = request.form.get("password")
+
+        user = db.execute("SELECT * FROM users WHERE username = :username AND (password =:password)", {"username":name, "password":password})
+        if user.rowCount > 0:
+            session["user"] = checkU
+            return redirect("/menu")
 
     return render_template("login.html")
 
 @app.route("/menu", methods=["GET","POST"]) 
 def menu():
+    
+    #Check if a valid user is trying send a GET request
+    if request.method == "GET":
+
         return render_template("menu.html")
 
 @app.route("/results", methods=["POST"])
