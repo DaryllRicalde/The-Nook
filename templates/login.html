@@ -2,28 +2,26 @@
 
 {% block heading %}
 Welcome to The Nook!
-{% endblock %}
 
+{% endblock %}
 {% block body %}
 <p> Search a book and leave a review! </p>
 
   <br>
-  <form action="{{ url_for('index') }}" method="post">
+  <form action="{{ url_for('login') }}" method="post">
       <div class="form-group row">
           <div class="form-group col-md-6">
           <label for="user">Username:</label>
-          <input type="text" class="form-control" id="user" placeholder="GeorgeOrwell84" readonly>
+          <input type="text" class="form-control" name="user" placeholder="GeorgeOrwell84">
           </div>
       </div>
 
       <div class="form-group row">
           <div class="form-group col-md-6">
         <label for="pwd">Password:</label>
-        <input type="password" class="form-control" id="password" placeholder="********" readonly>
+        <input type="password" class="form-control" name="password" placeholder="********">
           </div>
       </div>
-      
+      <button class="btn btn-primary" type="submit">Login</button>
     </form>
-    <button class="btn btn-primary" type="submit">Login</button>
-
 {% endblock %}
