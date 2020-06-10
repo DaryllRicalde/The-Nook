@@ -142,6 +142,9 @@ def book(isbn):
     author = book.author
     year = book.year    
     return render_template("book.html", average=average, title=title,author=author,year=year)
+
+    if request.method == "POST":
+        
         
 
 
