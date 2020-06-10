@@ -94,6 +94,7 @@ def menu(user_id):
         if user_id is None:
             return render_template("error.html",message="Please login first")
         else:
+            session["user"] = user_id
             currUser = db.execute("SELECT * FROM users WHERE user_id =:user_id", {"user_id":user_id}).fetchone()
             name = currUser.username
             return render_template("menu.html",Username=name)
