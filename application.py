@@ -80,6 +80,7 @@ def login():
 
         else:
             user_id = user.user_id 
+            session["user"] = user_id
             return redirect(url_for("menu", user_id=user_id))
 
     #Check if user is wanting to access the page via GET           
@@ -90,6 +91,7 @@ def login():
 def menu(user_id):
     
     #Check if a valid user is trying to access the menu page via GET
+
     if request.method == "GET":
         if user_id is None:
             return render_template("error.html",message="Please login first")
@@ -102,21 +104,30 @@ def menu(user_id):
 @app.route("/results", methods=["POST"])
 def results():
     
-    query = request.form.get("query")
-    #Concat the search query with "%" before and after to use it in a SQL query
-    search = "%" + query + "%"
+    if request.method == "POST":
 
-    if db.execute("SELECT * FROM books WHERE isbn LIKE :search OR (title LIKE :search) OR (author LIKE :search)", {"search":search}).rowcount == 0:
-        return render_template("error.html", message= "No book that matches query")
-    else:
-        books = db.execute("SELECT * FROM books WHERE isbn LIKE :search OR (title LIKE :search) OR (author LIKE :search) LIMIT 15", {"search":search}).fetchall()
-        return render_template("results.html", books=books)
+        query = request.form.get("query")
+        #Concat the search query with "%" before and after to use it in a SQL query
+        search = "%" + query + "%"
+
+        if db.execute("SELECT * FROM books WHERE isbn LIKE :search OR (title LIKE :search) OR (author LIKE :search)", {"search":search}).rowcount == 0:
+            return render_template("error.html", message= "No book that matches query")
+        else:
+            books = db.execute("SELECT * FROM books WHERE isbn LIKE :search OR (title LIKE :search) OR (author LIKE :search) LIMIT 15", {"search":search}).fetchall()
+            return render_template("results.html", books=books)
+
 
 @app.route("/results/<isbn>", methods=["GET", "POST"])
 def book(isbn):
-    if request.method == "POST":
+
+    if request.method == "GET":
         if db.execute("SELECT * FROM books WHERE isbn =:isbn", {"isbn" :isbn}).rowcount == 0:
             return render_template("error.html", message= "No ISBN matches that query")                
+    
+    #Save user session data
+    currUser = session["user"]
+    
+    #API Key
     key = "VLzf2BCTUPaWOUXWddDBQ"
 
     #Get JSON data
@@ -125,6 +136,7 @@ def book(isbn):
     data = query["books"][0]
     average = data["average_rating"]
 
+    #Get book data from database
     book = db.execute("SELECT * FROM books WHERE isbn =:isbn", {"isbn" :isbn}).fetchone()
     title = book.title
     author = book.author
