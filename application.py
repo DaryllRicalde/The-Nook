@@ -81,27 +81,27 @@ def login():
         else:
             user_id = user.user_id 
             session["user"] = user_id
-            return redirect(url_for("menu", user_id=user_id))
+            return redirect(url_for("menu"))
 
     #Check if user is wanting to access the page via GET           
-    if request.method == "GET":
+    else:
         return render_template("login.html")
 
-@app.route("/menu/<user_id>", methods=["GET","POST"]) 
-def menu(user_id):
+@app.route("/menu", methods=["GET","POST"]) 
+def menu():
     
     #Check if a valid user is trying to access the menu page via GET
 
     if request.method == "GET":
-        if user_id is None:
+        currUser = session["user"]
+        if currUser is None:
             return render_template("error.html",message="Please login first")
         else:
-            session["user"] = user_id
-            currUser = db.execute("SELECT * FROM users WHERE user_id =:user_id", {"user_id":user_id}).fetchone()
-            name = currUser.username
+            row = db.execute("SELECT * FROM users WHERE user_id =:user_id", {"user_id":currUser}).fetchone()
+            name = row.username
             return render_template("menu.html",Username=name)
 
-@app.route("/results", methods=["POST"])
+@app.route("/results", methods=["GET","POST"])
 def results():
     
     if request.method == "POST":
@@ -142,9 +142,6 @@ def book(isbn):
     author = book.author
     year = book.year    
     return render_template("book.html", average=average, title=title,author=author,year=year)
-
-    if request.method == "POST":
-        
         
 
 
