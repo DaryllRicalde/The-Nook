@@ -17,8 +17,8 @@ The Nook is a simple web application that allows users to create an account and 
 - [ ] Allow server to interact with the database
   - [ ] Create models.py
 - [ ] Create user sessions
-- [ ] Add background image
-- [ ] Add navigation bar
+- [x] Add background image
+- [x] Add navigation bar
 - [ ] Deploy website
 
   
