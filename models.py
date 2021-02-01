@@ -21,8 +21,8 @@ class Reviews(db.Model):
     review_id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
     isbn = db.Column(db.String, db.ForeignKey("books.isbn"), nullable=False)
-    rating = db.Column(db.Integer, nullable=True)
-    review = db.Column(db.String, nullable=True)
+    rating = db.Column(db.Integer, nullable=False)
+    review = db.Column(db.String, nullable=False)
 
     
     

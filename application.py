@@ -87,11 +87,18 @@ def login():
     else:
         return render_template("login.html")
 
+@app.route('/logout')
+def logout():
+    # remove the username from the session if it's there
+    user = session["user"]
+    session.pop('user', None)
+    return redirect(url_for('login'))
+
+
 @app.route("/menu", methods=["GET","POST"]) 
 def menu():
     
     #Check if a valid user is trying to access the menu page via GET
-
     if request.method == "GET":
         currUser = session["user"]
         if currUser is None:
@@ -142,6 +149,9 @@ def book(isbn):
     author = book.author
     year = book.year    
     return render_template("book.html", average=average, title=title,author=author,year=year)
+
+    if request.method == "POST":
+        
         
 
 
