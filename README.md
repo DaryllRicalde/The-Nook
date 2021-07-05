@@ -1,4 +1,4 @@
-# The Nook (CS50W Project 1)
+# The Nook
 
 The Nook is a simple web application that allows users to create an account and leave a review on the books that are available within the Database.
 
